@@ -18,6 +18,10 @@ public class LoginPage {
     @CacheLookup
     WebElement loginPageTitle;
 
+    @FindBy(xpath = "//div[contains(@class,'message-error')]")
+    @CacheLookup
+    WebElement txtLoginPageError;
+
     @FindBy(id = "Email")
     @CacheLookup
     WebElement txtEmail;
@@ -59,8 +63,13 @@ public class LoginPage {
     public void clickLogout() {
         btnLogout.click();
     }
+
     public String getLoginPageTitle() {
         return loginPageTitle.getText();
+    }
+
+    public String getLoginPageError() {
+        return txtLoginPageError.getText();
     }
 
 }

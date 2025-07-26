@@ -28,6 +28,7 @@ public class LoginPageSteps {
     public void i_open_opens_url_home_page(String string) {
         driver.get(string);
     }
+
     @When("I enter Email as {string}")
     public void i_enter_email_as(String string) {
         loginPage.setUserName(string);
@@ -45,10 +46,10 @@ public class LoginPageSteps {
 
     @Then("I verify home page title is {string}")
     public void i_verify_home_page_title_is(String string) {
-        if(Objects.requireNonNull(driver.getPageSource()).contains("Login was unsuccessful")) {
+        if (Objects.requireNonNull(driver.getPageSource()).contains("Login was unsuccessful")) {
             driver.quit();
             Assert.fail();
-        }else {
+        } else {
             Assert.assertEquals(string, loginPage.getHomePageTitle());
         }
     }
@@ -60,12 +61,25 @@ public class LoginPageSteps {
 
     @Then("I verify login page title is {string}")
     public void i_verify_login_page_title_is(String string) throws InterruptedException {
-        Thread.sleep(3000);
-        if (string.contains(loginPage.getLoginPageTitle())){
-            Assert.assertTrue("Login Out redirect into login page successfully",true);
-        }else{
+        Thread.sleep(1000);
+        if (string.contains(loginPage.getLoginPageTitle())) {
+            Assert.assertTrue("Login Out redirect into login page successfully", true);
+        } else {
             driver.quit();
             Assert.fail("Login page title is not as expected");
+        }
+    }
+
+    @Then("I verify error message is displayed as {string}")
+    public void i_verify_error_message_is_displayed_as(String string) throws InterruptedException {
+        Thread.sleep(1000);
+        String actualErrorMessage = loginPage.getLoginPageError();
+        System.out.println("Actual Error Message: " + actualErrorMessage);
+        if (actualErrorMessage.contains(string)) {
+            Assert.assertTrue("Login page display valid error message successfully", true);
+        } else {
+            driver.quit();
+            Assert.fail("Login page not displayed valid error message"+ string + " but actual is " + actualErrorMessage);
         }
     }
 
