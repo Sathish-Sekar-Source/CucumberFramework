@@ -11,16 +11,14 @@ import pageObjects.LoginPage;
 
 import java.util.Objects;
 
-public class LoginPageSteps {
-
-    public WebDriver driver;
-    LoginPage loginPage;
+public class LoginPageSteps extends BaseClass {
 
     @Given("I launch chrome browser")
     public void i_launch_chrome_browser() {
         System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "//Drivers//Chrome/chromedriver.exe");
         driver = new ChromeDriver();
         loginPage = new LoginPage(driver);
+        BaseClass.driver1 = driver;
 //        driver.manage().window().maximize();
     }
 
@@ -79,7 +77,7 @@ public class LoginPageSteps {
             Assert.assertTrue("Login page display valid error message successfully", true);
         } else {
             driver.quit();
-            Assert.fail("Login page not displayed valid error message"+ string + " but actual is " + actualErrorMessage);
+            Assert.fail("Login page not displayed valid error message" + string + " but actual is " + actualErrorMessage);
         }
     }
 
