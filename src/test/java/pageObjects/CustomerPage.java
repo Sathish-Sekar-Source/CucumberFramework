@@ -1,18 +1,24 @@
 package pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import utilities.WaitHelper;
+
+import java.util.Objects;
 
 import static stepDefinitions.BaseClass.*;
 
-public class AddCustomerPage {
+public class CustomerPage {
     public WebDriver driver;
+    public WaitHelper waitHelper;
 
-    public AddCustomerPage(WebDriver driver) {
+    public CustomerPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitHelper = new WaitHelper(driver);
     }
 
     By lnkCustomers_menu = By.xpath("//*/p[normalize-space(.)='Customers']/i");
@@ -32,6 +38,17 @@ public class AddCustomerPage {
     By txtAdminComment = By.id("AdminComment");
     By btnSaveForm = By.xpath("//button[@name='save']");
     By txtCreateMessage = By.xpath("//div[@class='alert alert-success alert-dismissable']");
+    By lnkSearch = By.xpath("//div[@class='row search-row']");
+    By txtSearchEmail = By.id("SearchEmail");
+    By txtSearchFirstName = By.id("SearchFirstName");
+    By txtSearchLastName = By.id("SearchLastName");
+    By btnSearch = By.id("search-customers");
+    By eleSearchTable = By.xpath("//table[@id='customers-grid']");
+    By eleSearchTableRows = By.xpath("//table[@id='customers-grid']//tbody/tr");
+    By eleSearchTableColumns = By.xpath("//table[@id='customers-grid']//tbody/tr/td");
+
+    int rows=0,
+        columns=0;
 
     public void clickOnCustomersMenu() {
         driver.findElement(lnkCustomers_menu).click();
@@ -112,10 +129,18 @@ public class AddCustomerPage {
 
     public void enterCustomerInfo(String company, String newsLetter,
                                   String customerRoles, String vendor, String adminComment) {
-        setEmail(generateEmail("gmail.com"));
-        setPassword(generatePassword(12));
-        setFirstName(getRandomFirstName());
-        setLastName(getRandomLastName());
+        String email=generateEmail("gmail.com");
+        setEmail(email);
+        put("Email",email);
+        String password = generatePassword(12);
+        setPassword(password);
+        put("Password", password);
+        String firstName = getRandomFirstName();
+        setFirstName(firstName);
+        put("FirstName", firstName);
+        String lastName = getRandomLastName();
+        setLastName(lastName);
+        put("LastName", lastName);
         setGenderMale();
         setCompany(company);
         setIsTaxExempt();
@@ -125,9 +150,80 @@ public class AddCustomerPage {
         setAdminComment(adminComment);
     }
 
-    public String getCreateMessage() throws InterruptedException {
-        Thread.sleep(1000);
+    public String getCreateMessage() {
+        waitHelper.waitForElement(driver.findElement(txtCreateMessage), 10);
         return driver.findElement(txtCreateMessage).getText().trim();
+    }
+
+    public void clickOnSearch() {
+        waitHelper.waitForElement(driver.findElement(lnkSearch), 30);
+        driver.findElement(lnkSearch).click();
+    }
+
+    public void enterSearchEmail(String email, String firstName, String lastName) {
+        waitHelper.waitForElement(driver.findElement(txtSearchEmail), 10);
+        driver.findElement(txtSearchEmail).clear();
+        String Email = (!Objects.equals(email, "empty")) ? email : get("Email");
+        driver.findElement(txtSearchEmail).sendKeys(Email);
+
+        driver.findElement(txtSearchFirstName).clear();
+        String FirstName = (!Objects.equals(firstName, "empty")) ? firstName : get("FirstName");
+        driver.findElement(txtSearchFirstName).sendKeys(FirstName);
+
+        driver.findElement(txtSearchLastName).clear();
+        String LastName = (!Objects.equals(lastName, "empty")) ? lastName : get("LastName");
+        driver.findElement(txtSearchLastName).sendKeys(LastName);
+    }
+
+    public void clickOnSearchButton() {
+        driver.findElement(btnSearch).click();
+    }
+
+    public void searchResultTableDetails(String email) throws InterruptedException {
+        waitHelper.waitForElement(driver.findElement(eleSearchTable), 30);
+        rows = driver.findElements(eleSearchTableRows).size();
+        columns = driver.findElements(eleSearchTableColumns).size();
+        System.out.println("Total Rows: " + rows);
+        System.out.println("Total Columns: " + columns);
+        if (!Objects.equals(email, "empty")) {
+            verifySearchResult(email);
+        }else{
+            verifySearchResult(get("Email"));
+        }
+    }
+
+    public void verifySearchResult(String email) throws InterruptedException {
+        boolean flag=false;
+        String cellData="";
+        Thread.sleep(1000);
+
+        for (int i=1; i<=rows; i++) {
+            for (int nxt=i+1;nxt<columns; nxt++) {
+                cellData = driver.findElement(By.xpath("//table[@id='customers-grid']//tbody/tr["+i+"]/td["+nxt+"]")).getText();
+                System.out.print(cellData + " | ");
+                if (cellData.equals(email)) {
+                    flag = true;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+            if(flag) {
+                clearRowAndColumnCount();
+                break;
+            }
+        }
+        if(flag) {
+            System.out.println("Email found in the search table: " + cellData);
+        }else{
+            System.out.println("Email not found in the search table.");
+            Assert.fail();
+        }
+    }
+
+    public void clearRowAndColumnCount() {
+        rows = 0;
+        columns = 0;
     }
 
 }

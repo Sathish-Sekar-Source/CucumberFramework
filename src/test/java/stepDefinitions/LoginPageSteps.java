@@ -58,8 +58,7 @@ public class LoginPageSteps extends BaseClass {
     }
 
     @Then("I verify login page title is {string}")
-    public void i_verify_login_page_title_is(String string) throws InterruptedException {
-        Thread.sleep(1000);
+    public void i_verify_login_page_title_is(String string) {
         if (string.contains(loginPage.getLoginPageTitle())) {
             Assert.assertTrue("Login Out redirect into login page successfully", true);
         } else {
@@ -69,8 +68,7 @@ public class LoginPageSteps extends BaseClass {
     }
 
     @Then("I verify error message is displayed as {string}")
-    public void i_verify_error_message_is_displayed_as(String string) throws InterruptedException {
-        Thread.sleep(1000);
+    public void i_verify_error_message_is_displayed_as(String string) {
         String actualErrorMessage = loginPage.getLoginPageError();
         System.out.println("Actual Error Message: " + actualErrorMessage);
         if (actualErrorMessage.contains(string)) {

@@ -1,15 +1,12 @@
 package stepDefinitions;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
-import pageObjects.AddCustomerPage;
+import pageObjects.CustomerPage;
 import pageObjects.LoginPage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BaseClass {
@@ -17,7 +14,8 @@ public class BaseClass {
     public WebDriver driver;
     public static WebDriver driver1;
     LoginPage loginPage;
-    AddCustomerPage addCustomerPage;
+    CustomerPage customerPage;
+    private static final Map<String, Object> data = new HashMap<>();
 
     public static String generateEmail(String domain) {
         String uniquePart = UUID.randomUUID().toString().substring(0, 3);
@@ -48,5 +46,17 @@ public class BaseClass {
         return LAST_NAMES.get(ThreadLocalRandom.current().nextInt(LAST_NAMES.size()));
     }
 
+    public static void put(String key, Object value) {
+        data.put(key, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T get(String key) {
+        return (T) data.get(key);
+    }
+
+    public static void clear() {
+        data.clear();
+    }
 
 }

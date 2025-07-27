@@ -5,13 +5,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.WaitHelper;
 
 public class LoginPage {
     public WebDriver driver;
+    public WaitHelper waitHelper;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitHelper= new WaitHelper(driver);
     }
 
     @FindBy(xpath = "//div[@class='page-title']")
@@ -65,10 +68,12 @@ public class LoginPage {
     }
 
     public String getLoginPageTitle() {
+        waitHelper.waitForElement(loginPageTitle,10);
         return loginPageTitle.getText();
     }
 
     public String getLoginPageError() {
+        waitHelper.waitForElement(txtLoginPageError,10);
         return txtLoginPageError.getText();
     }
 
