@@ -84,7 +84,4 @@ public class CustomerPageSteps extends BaseClass {
         customerPage.searchResultTableDetails(email);
     }
 
-
-
-
 }

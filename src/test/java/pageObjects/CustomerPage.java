@@ -3,10 +3,18 @@ package pageObjects;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import utilities.WaitHelper;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import static stepDefinitions.BaseClass.*;
@@ -204,8 +212,6 @@ public class CustomerPage {
                 if (cellData.equals(email)) {
                     flag = true;
                     break;
-                } else {
-                    continue;
                 }
             }
             if(flag) {
@@ -224,6 +230,43 @@ public class CustomerPage {
     public void clearRowAndColumnCount() {
         rows = 0;
         columns = 0;
+    }
+
+    public void selectDateFromCalendar(WebDriver driver, String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate targetDate = LocalDate.parse(dateStr, formatter);
+
+        String day = String.valueOf(targetDate.getDayOfMonth());
+        String month = targetDate.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        int year = targetDate.getYear();
+
+        while (true) {
+            // Read current calendar month/year from the UI
+            String displayedMonth = driver.findElement(By.cssSelector(".ui-datepicker-month")).getText();
+            String displayedYear = driver.findElement(By.cssSelector(".ui-datepicker-year")).getText();
+
+            if (month.equalsIgnoreCase(displayedMonth) && year == Integer.parseInt(displayedYear)) {
+                break; // Target month/year reached
+            }
+
+            // Navigate forward/backward based on year/month
+            LocalDate displayed = YearMonth.of(Integer.parseInt(displayedYear), Month.valueOf(displayedMonth.toUpperCase())).atDay(1);
+
+            if (targetDate.isAfter(displayed)) {
+                driver.findElement(By.cssSelector(".ui-datepicker-next")).click(); // adjust selector if needed
+            } else {
+                driver.findElement(By.cssSelector(".ui-datepicker-prev")).click(); // adjust selector if needed
+            }
+        }
+
+        // Select the day
+        List<WebElement> days = driver.findElements(By.xpath("//td[not(contains(@class,'ui-datepicker-other-month'))]/a"));
+        for (WebElement el : days) {
+            if (el.getText().equals(day)) {
+                el.click();
+                break;
+            }
+        }
     }
 
 }
