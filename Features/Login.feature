@@ -1,5 +1,6 @@
 Feature: Login
 
+  @RegressionTest
   Scenario: Successful login with valid credentials
     Given I launch chrome browser
     When I open opens URL "https://admin-demo.nopcommerce.com/login" home page
@@ -11,7 +12,7 @@ Feature: Login
     Then I verify login page title is "Admin area demo"
     And close the browser
 
-  @smokeTest
+  @RegressionTest
   Scenario Outline: Login with invalid credentials
     Given I launch chrome browser
     When I open opens URL "https://admin-demo.nopcommerce.com/login" home page

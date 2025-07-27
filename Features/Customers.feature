@@ -8,7 +8,7 @@ Feature: Customers
     And I click on the login button
     Then I verify home page title is "Dashboard"
 
-  @smokeTest1
+  @SmokeTest
   Scenario: Add new customer with Auto Generated details
     When I click on Customers menu
     And I click on Customers menu item
@@ -20,7 +20,7 @@ Feature: Customers
     Then I verify success message is displayed as "The new customer has been added successfully"
     And close the browser
 
-  @smokeTest1
+  @SmokeTest
   Scenario: Search Existing Auto Generated Customer by empty EmailID, First Name, and Last Name
     When I click on Customers menu
     And I click on Customers menu item
@@ -29,7 +29,7 @@ Feature: Customers
     Then User should found Email in the search table "empty"
     And close the browser
 
-  @smokeTest1
+  @SmokeTest
   Scenario: Search Existing Customer by EmailID, First Name, and Last Name
     When I click on Customers menu
     And I click on Customers menu item

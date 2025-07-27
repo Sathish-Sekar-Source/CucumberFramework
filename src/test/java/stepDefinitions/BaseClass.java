@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import pageObjects.CustomerPage;
 import pageObjects.LoginPage;
@@ -16,6 +17,8 @@ public class BaseClass {
     LoginPage loginPage;
     CustomerPage customerPage;
     private static final Map<String, Object> data = new HashMap<>();
+    public static Logger logger;
+    Properties configProperties;
 
     public static String generateEmail(String domain) {
         String uniquePart = UUID.randomUUID().toString().substring(0, 3);
