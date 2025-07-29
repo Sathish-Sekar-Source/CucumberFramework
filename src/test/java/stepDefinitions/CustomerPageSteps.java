@@ -11,7 +11,7 @@ public class CustomerPageSteps extends BaseClass {
 
     @When("I click on Customers menu")
     public void i_click_on_customers_menu() {
-        customerPage = new CustomerPage(driver1);
+        customerPage = new CustomerPage(driver);
         customerPage.clickOnCustomersMenu();
     }
 
@@ -25,7 +25,7 @@ public class CustomerPageSteps extends BaseClass {
         if (string.contains(customerPage.getPageTitle())) {
             Assert.assertTrue("", true);
         } else {
-            driver1.quit();
+            driver.quit();
             Assert.fail();
         }
     }
@@ -41,7 +41,7 @@ public class CustomerPageSteps extends BaseClass {
         if (Objects.equals(string, customerPage.getPageTitle())) {
             Assert.assertTrue("User navigate into Add new Customer Page Successfully", true);
         } else {
-            driver1.quit();
+            driver.quit();
             Assert.fail();
         }
     }
@@ -64,7 +64,7 @@ public class CustomerPageSteps extends BaseClass {
         if (actualMessage.contains(string)) {
             Assert.assertTrue("User Add new Customer Successfully", true);
         } else {
-            driver1.quit();
+            driver.quit();
             Assert.fail();
         }
     }

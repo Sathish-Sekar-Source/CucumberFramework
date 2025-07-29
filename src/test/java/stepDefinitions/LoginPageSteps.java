@@ -1,52 +1,19 @@
 package stepDefinitions;
 
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import pageObjects.LoginPage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Objects;
-import java.util.Properties;
 
 public class LoginPageSteps extends BaseClass {
-
-    @Before
-    public void setUp() throws IOException {
-        logger = Logger.getLogger("Project Name");
-        PropertyConfigurator.configure("log4j.properties");
-
-        configProperties=new Properties();
-        FileInputStream configPropertiesFile=new FileInputStream("config.properties");
-        configProperties.load(configPropertiesFile);
-
-        String browser = configProperties.getProperty("browser");
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + configProperties.getProperty("chrome_driver_path"));
-            driver = new ChromeDriver();
-        }
-        else if(browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + configProperties.getProperty("firefox_driver_path"));
-            driver = new FirefoxDriver();
-        }
-        logger.info("******Browser launched successfully******");
-
-    }
 
     @Given("I launch chrome browser")
     public void i_launch_chrome_browser() {
         loginPage = new LoginPage(driver);
-        BaseClass.driver1 = driver;
 //        driver.manage().window().maximize();
     }
 

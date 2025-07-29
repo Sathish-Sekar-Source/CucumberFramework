@@ -12,13 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BaseClass {
 
-    public WebDriver driver;
-    public static WebDriver driver1;
+    public static WebDriver driver;
     LoginPage loginPage;
     CustomerPage customerPage;
     private static final Map<String, Object> data = new HashMap<>();
     public static Logger logger;
-    Properties configProperties;
+    public static Properties configProperties;
 
     public static String generateEmail(String domain) {
         String uniquePart = UUID.randomUUID().toString().substring(0, 3);
