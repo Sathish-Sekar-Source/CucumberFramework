@@ -1,5 +1,8 @@
 package pageObjects;
 
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -45,6 +48,14 @@ public class LoginPage {
     @CacheLookup
     WebElement btnLogout;
 
+    @FindBy(xpath = "//*[@title='Search']")
+    @CacheLookup
+    WebElement txtSearch;
+
+    @FindBy(xpath = "(//*[@value='Google Search'])[2]")
+    @CacheLookup
+    WebElement btnSearch;
+
     public void setUserName(String email) {
         txtEmail.clear();
         txtEmail.sendKeys(email);
@@ -75,6 +86,28 @@ public class LoginPage {
     public String getLoginPageError() {
         waitHelper.waitForElement(txtLoginPageError,10);
         return txtLoginPageError.getText();
+    }
+
+    public void enterSearchText(String searchText) {
+        txtSearch.clear();
+        txtSearch.sendKeys(searchText);
+        txtSearch.sendKeys(Keys.ENTER);
+    }
+
+    public void clickSearch() {
+        btnSearch.click();
+    }
+
+    public void verifyPageElementIsDisplayed(String title) {
+        WebElement element = driver.findElement(By.xpath("(//*[text()='" + title + "'])[1]"));
+        waitHelper.waitForElement(element, 5);
+        if (element.isDisplayed()) {
+            System.out.println("Element is displayed: " + element.toString());
+            Assert.assertTrue(true);
+        } else {
+            System.out.println("Element is NOT displayed: " + element.toString());
+            Assert.fail();
+        }
     }
 
 }

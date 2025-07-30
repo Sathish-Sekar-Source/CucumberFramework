@@ -8,6 +8,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jsoup.Connection;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import stepDefinitions.BaseClass;
 
 import java.io.FileInputStream;
@@ -30,9 +31,9 @@ public class Hooks extends BaseClass {
             System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + configProperties.getProperty("chrome_driver_path"));
             driver = new ChromeDriver();
         }
-        else if(browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + configProperties.getProperty("firefox_driver_path"));
-            driver = new FirefoxDriver();
+        else if(browser.equals("IE")) {
+            System.setProperty("webdriver.ie.driver", System.getProperty("user.dir") + configProperties.getProperty("ie_driver_path"));
+            driver = new InternetExplorerDriver();
         }
         logger.info("******Browser launched successfully******");
     }

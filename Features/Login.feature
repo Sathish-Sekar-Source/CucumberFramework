@@ -1,6 +1,6 @@
 Feature: Login
 
-  @RegressionTest
+  @RegressionTest1
   Scenario: Successful login with valid credentials
     Given I launch chrome browser
     When I open opens URL "https://admin-demo.nopcommerce.com/login" home page
@@ -26,3 +26,13 @@ Feature: Login
       | email                | password   |
       | admin1@yourstore.com | admin      |
       | admin@yourstore.com  | admin1     |
+
+  @GoogleTest
+    Scenario: Login with empty credentials
+    Given I launch chrome browser
+    When I open opens URL "https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwi7gPrGueOOAxXISWwGHSnRMRYQPAgI" home page
+    Then I verify home page title is "Google"
+    And I enter search text as "Super Car"
+    #And I click on the search button
+    #Then I verify search results page title contains "AI Overview"
+    And close the browser

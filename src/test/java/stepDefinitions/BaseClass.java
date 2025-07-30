@@ -35,14 +35,14 @@ public class BaseClass {
     }
 
     public static String getRandomFirstName() {
-        List<String> FIRST_NAMES = List.of(
+        List<String> FIRST_NAMES = Arrays.asList(
                 "Aarav", "Kavya", "Rohan", "Meera", "Shamitha", "Dhiyaa", "Vihaan", "Ishita"
         );
         return FIRST_NAMES.get(ThreadLocalRandom.current().nextInt(FIRST_NAMES.size()));
     }
 
     public static String getRandomLastName() {
-        List<String> LAST_NAMES = List.of(
+        List<String> LAST_NAMES = Arrays.asList(
                 "Sharma", "Sekar", "Verma", "Reddy", "Patel", "Nair", "Mishra", "Iyer"
         );
         return LAST_NAMES.get(ThreadLocalRandom.current().nextInt(LAST_NAMES.size()));

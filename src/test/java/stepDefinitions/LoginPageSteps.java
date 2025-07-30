@@ -44,7 +44,9 @@ public class LoginPageSteps extends BaseClass {
             driver.quit();
             Assert.fail();
         } else {
-            Assert.assertEquals(string, loginPage.getHomePageTitle());
+            //Assert.assertEquals(string, loginPage.getHomePageTitle());
+            System.out.println("title is: " + driver.getTitle());
+            Assert.assertEquals(string, driver.getTitle());
         }
     }
 
@@ -73,6 +75,19 @@ public class LoginPageSteps extends BaseClass {
             driver.quit();
             Assert.fail("Login page not displayed valid error message" + string + " but actual is " + actualErrorMessage);
         }
+    }
+
+    @Then("I enter search text as {string}")
+    public void i_enter_search_text_as(String string) {
+        loginPage.enterSearchText(string);
+    }
+    @Then("I click on the search button")
+    public void i_click_on_the_search_button() {
+        loginPage.clickSearch();
+    }
+    @Then("I verify search results page title contains {string}")
+    public void i_verify_search_results_page_title_contains(String string) {
+        loginPage.verifyPageElementIsDisplayed(string);
     }
 
     @And("close the browser")
