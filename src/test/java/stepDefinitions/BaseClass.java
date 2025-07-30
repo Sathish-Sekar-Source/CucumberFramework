@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import pageObjects.CustomerPage;
@@ -18,6 +20,9 @@ public class BaseClass {
     private static final Map<String, Object> data = new HashMap<>();
     public static Logger logger;
     public static Properties configProperties;
+    public static ExtentReports extent;
+    public static ExtentTest test;
+
 
     public static String generateEmail(String domain) {
         String uniquePart = UUID.randomUUID().toString().substring(0, 3);

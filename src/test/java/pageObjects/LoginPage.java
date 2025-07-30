@@ -1,5 +1,7 @@
 package pageObjects;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -9,6 +11,9 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.WaitHelper;
+
+import static stepDefinitions.BaseClass.extent;
+import static stepDefinitions.BaseClass.test;
 
 public class LoginPage {
     public WebDriver driver;
@@ -92,6 +97,7 @@ public class LoginPage {
         txtSearch.clear();
         txtSearch.sendKeys(searchText);
         txtSearch.sendKeys(Keys.ENTER);
+        test.pass("Step 1: Google Passed");
     }
 
     public void clickSearch() {

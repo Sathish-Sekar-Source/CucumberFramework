@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
                 "json:target/cucumber.json"},
         monochrome = true,
         dryRun = false,
-        tags = "@RegressionTest1" // You can change or remove this line to run all tests
+        tags = "@GoogleTest" // You can change or remove this line to run all tests
 )
 public class TestRunner {
 

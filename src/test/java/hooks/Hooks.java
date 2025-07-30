@@ -1,5 +1,8 @@
 package hooks;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -36,6 +39,10 @@ public class Hooks extends BaseClass {
             driver = new InternetExplorerDriver();
         }
         logger.info("******Browser launched successfully******");
+        ExtentSparkReporter reporter = new ExtentSparkReporter("target/extent-report.html");
+        extent = new ExtentReports();
+        extent.attachReporter(reporter);
+        test = extent.createTest("Sample Test");
     }
 
     @After
@@ -46,6 +53,7 @@ public class Hooks extends BaseClass {
         } else {
             System.out.println("✅ Scenario Passed: " + scenario.getName());
         }
+        extent.flush(); // Generates the report
 
     }
 }
